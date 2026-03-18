@@ -30,7 +30,7 @@ ITEM: gamma
 
 ```Shell
 $ touch {a..e}.txt
-find . | grep -E ./.?.txt | xargs -p rm
+$ find . | grep -E ./.?.txt | xargs -p rm
 rm ./e.txt ./d.txt ./a.txt ./c.txt ./b.txt?...
 ```
 
@@ -40,10 +40,10 @@ rm ./e.txt ./d.txt ./a.txt ./c.txt ./b.txt?...
 $ touch foo bar "foo bar"
 ls
  foo   bar   'foo bar'
-find . | grep foo | xargs -p rm
-$ rm ./foo bar ./foo?...
+$ find . | grep foo | xargs -p rm
+rm ./foo bar ./foo?...
 $ find . | grep foo | xargs rm
 rm: cannot remove './foo': No such file or directory
-ls
+$ ls
  'foo bar'
 ```
