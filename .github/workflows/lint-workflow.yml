@@ -1,4 +1,5 @@
 name: Lint workflow
+run-name: Lint ${{ github.actor }} created workflow
 
 on:
   push:
