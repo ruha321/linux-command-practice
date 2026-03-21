@@ -1,0 +1,20 @@
+{
+    "folders": [
+        {
+            "name": "GitHub Actions",
+            "path": "./.github",
+        },
+        {
+            "name": "Linux Command",
+            "path": "linux_command",
+        },
+        {
+            "name": "Vim",
+            "path": "vim",
+        },
+        {
+            "name": "Root",
+            "path": ".",
+        },
+    ],
+}
