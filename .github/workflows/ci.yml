@@ -1,0 +1,8 @@
+name: All ci
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-lint-workflow:
+    uses: ".github/workflows/lint_workflow.yml"

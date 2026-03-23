@@ -11,6 +11,7 @@ on:
       - ".github/workflows/**/*.yml"
       - ".github/workflows/**/*.yaml"
   workflow_dispatch:
+  workflow_call:
 
 
 jobs:
