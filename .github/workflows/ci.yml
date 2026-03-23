@@ -7,4 +7,4 @@ jobs:
   call-lint-workflow:
     runs-on: ubuntu-latest
     steps:
-      - uses: ".github/workflows/lint_workflow.yml"
+      - uses: ".github/workflows/lint_workflow.yml@a5a1fa312c219413d2278632a7ae4919c06aa580"
