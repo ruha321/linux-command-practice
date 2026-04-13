@@ -131,3 +131,65 @@ docker container logs container-name # ログの確認 Dockerfile等で設定す
 1. バインドマウント (Bind mount)
 2. ボリューム (Volume)
 3. 一時ファイルシステムのマウント (tmpfs mount)
+
+バインドマウント
+
+ホスト側パスはpodmanが動いているマシンのパス
+
+```bash
+podman container run -d --name docker-test --rm -p 8080:80 -v /home/ruha321/github-and-linux-practice/Docker:/usr/share/nginx/html nginx
+```
+
+ボリューム
+
+```bash
+podman volume create htdocs
+podman volume ls
+podman run -d --name volume-nginx -p 8080:80 -v htdocs:/usr/share/nginx/html nginx
+podman volume inspect htdocs # ボリュームのマウント先が分かる
+```
+
+一時ファイルシステムのマウント
+
+```bash
+podman container run -d --name tmpfs-nginx --mount type=tmpfs,destination=/root/tmp,tmpfs-size=10,tmpfs-mode=755 nginx
+```
+
+データボリュームコンテナ
+
+```bash
+podman container run -it -d --name data-volume -v /tmp/data-volume/share:/tmp/data busybox
+podman container run -it -d --name share01 --volumes-from data-volume ubuntu
+podman container run -it -d --name share02 --volumes-from data-volume ubuntu
+```
+
+## コンテナのネットワーク
+
+1. none
+2. host
+3. bridge
+
+```bash
+podman network ls
+podman network inspect podman
+```
+
+ブリッジネットワークとアプリケーション
+
+```bash
+podman network create wordpress-network
+podman network ls
+podman container run -d --name mysql --network wordpress-network \
+-e MYSQL_ROOT_PASSWORD=wordpress \
+-e MYSQL_DATABASE=wordpress \
+-e MYSQL_USER=wordpress \
+-e MYSQL_PASSWORD=wordpress \
+mysql:8.0.25
+podman container run -d --name wordpress --network wordpress-network \
+-p 8080:80 \
+-e WORDPRESS_DB_HOST=mysql:3306 \
+-e WORDPRESS_DB_NAME=wordpress \
+-e WORDPRESS_DB_USER=wordpress \
+-e WORDPRESS_DB_PASSWORD=wordpress \
+docker.io/library/wordpress:php7.4-apache
+```

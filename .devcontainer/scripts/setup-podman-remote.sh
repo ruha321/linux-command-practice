@@ -7,7 +7,7 @@ NAME="fedora-podman"
 USER_NAME="ruha321"
 HOST_NAME="host.docker.internal"
 PORT="2222"
-SOCKET_PATH="/tmp/podman-rootless/podman.sock"
+SOCKET_PATH="/run/user/1000/podman/podman.sock"
 
 podman system connection rm -f "${NAME}" >/dev/null 2>&1 || true
 

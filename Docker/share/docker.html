@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>docker.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="docker学習メモ">Docker学習メモ</h1>
+<h2 id="dockerfile">Dockerfile</h2>
+<p>ベースイメージの指定
+<code>FROM ubuntu:latest</code></p>
+<p>コンテナイメージ作成時に実行させるコマンド</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">RUN</span><span class="language-bash"> apt update \
+    &amp;&amp; apt install curl -y</span>
+</div></code></pre>
+<p>RUNで実行されるシェルの指定
+<code>SHELL [&quot;/bin/bash&quot;, &quot;-l&quot;, &quot;-c&quot;]</code></p>
+<p>コンテナ内にファイル・ディレクトリをコピー
+<code>COPY [&quot;index.html&quot;, &quot;/usr/share/nginx/index.html&quot;]</code></p>
+<p>コンテナ内にtarファイルを自動展開したものやURL先のリモートファイルなどを追加（コピー）
+<code>ADD [&quot;dist.tar&quot;, &quot;/usr/share/nginx/dist&quot;]</code></p>
+<p>環境変数の設定
+<code>ENV NAME=ruha321</code></p>
+<p>公開ポートを設定
+<code>EXPOSE 8080</code></p>
+<p>指定が無いときにデフォルトで実行されるコマンド
+<code>CMD [&quot;/bin/bash&quot;]</code></p>
+<p>docker run実行時に行われるコマンド
+<code>ENTRYPOINT [&quot;/usr/sbin/nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]</code></p>
+<p>RUN, CMD, ENTRYPOINGを実行するユーザーを指定
+<code>USER user</code></p>
+<p>共有可能ボリュームをマウント
+<code>VOLUME [&quot;/var/lib/mysql&quot;]</code></p>
+<p>コピー系やコマンド系の作業ディレクトリを指定
+<code>WORKDIR /home/ubuntu</code></p>
+<p>...</p>
+<h2 id="イメージとビルド">イメージとビルド</h2>
+<p>イメージビルドコマンド
+<code>docker image build -t image-name:tag dir -f Dockerfile-2</code></p>
+<p>イメージの確認
+<code>docker image ls</code></p>
+<p>イメージビルドの履歴確認
+<code>docker image history image-name:tag</code></p>
+<p>イメージの削除
+<code>docker image rm image-name:tag</code></p>
+<h2 id="マルチステージビルド">マルチステージビルド</h2>
+<pre class="hljs"><code><div><span class="hljs-comment"># ステージ１ ビルドステージ</span>
+<span class="hljs-keyword">FROM</span> golang:<span class="hljs-number">1.16</span>.<span class="hljs-number">4</span>-alpine3.<span class="hljs-number">13</span> AS builder
+
+<span class="hljs-keyword">COPY</span><span class="language-bash"> ./main.go ./</span>
+
+<span class="hljs-keyword">RUN</span><span class="language-bash"> go build -o /msb ./main.go</span>
+
+<span class="hljs-comment"># ステージ２</span>
+<span class="hljs-keyword">FROM</span> alpine:<span class="hljs-number">3.13</span>
+
+<span class="hljs-keyword">COPY</span><span class="language-bash"> --from=builder /msb /usr/local/bin/msb</span>
+
+<span class="hljs-keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="hljs-string">&quot;/usr/local/bin/msb&quot;</span>]</span>
+</div></code></pre>
+<h2 id="imageのpushとpull">imageのpushとpull</h2>
+<p>Trivyのような脆弱性検査ツールを使用する</p>
+<pre class="hljs"><code><div>trivy image ruha321/docker-test:0.01
+trivy nginx:1.19.2
+</div></code></pre>
+<p>push/pull</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># push</span>
+docker login
+docker image push ruha321/docker-test:0.01
+<span class="hljs-comment"># pull</span>
+docker image pull ruha321/docker-test:0.01
+</div></code></pre>
+<h2 id="コンテナの起動">コンテナの起動</h2>
+<p>例
+<code>docker container run -d --name container -p 8080:80 --rm -v /home/user/share:/usr/share image-name:tag</code></p>
+<table>
+<thead>
+<tr>
+<th>オプションの名前</th>
+<th>オプションの指定方法</th>
+<th>composeとの対応 ｜</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>フォアグラウンドかバックグラウンドか</td>
+<td>-it か -d</td>
+<td>---</td>
+</tr>
+<tr>
+<td>コンテナの名前</td>
+<td>--name container-name</td>
+<td></td>
+</tr>
+<tr>
+<td>host:containerのポートの対応</td>
+<td>-p 8080:80</td>
+<td></td>
+</tr>
+<tr>
+<td>コンテナの自動削除</td>
+<td>--rm</td>
+<td></td>
+</tr>
+<tr>
+<td>ボリュームのマウント</td>
+<td>-v /path/host:/path/container</td>
+<td>volume:</td>
+</tr>
+</tbody>
+</table>
+<p>コンテナ内での操作：例
+<code>docker container exec -it container-name /bin/bash</code></p>
+<p>コンテナに関わるコマンド</p>
+<pre class="hljs"><code><div>docker container <span class="hljs-built_in">ls</span>
+docker container <span class="hljs-built_in">ls</span> -a
+docker container stop container-name`
+docker container start container-name`
+docker container <span class="hljs-built_in">cp</span> copy.html container-name:/usr/share/nginx/html
+docker container <span class="hljs-built_in">cp</span> conttainer-name1:/workspace/dir_name/copy.html container-name2:/usr/share/nginx/html
+docker container stats container-name <span class="hljs-comment"># 使用状況確認</span>
+docker container inspect container-name <span class="hljs-comment"># 情報確認</span>
+docker container <span class="hljs-built_in">rm</span> container-name
+docker container logs container-name <span class="hljs-comment"># ログの確認 Dockerfile等で設定する必要がある -fでリアルタイム化</span>
+</div></code></pre>
+<h2 id="永続化データ">永続化データ</h2>
+<ol>
+<li>バインドマウント (Bind mount)</li>
+<li>ボリューム (Volume)</li>
+<li>一時ファイルシステムのマウント (tmpfs mount)</li>
+</ol>
+<p>バインドマウント</p>
+<p>ホスト側パスはpodmanが動いているマシンのパス</p>
+<pre class="hljs"><code><div>podman container run -d --name docker-test --<span class="hljs-built_in">rm</span> -p 8080:80 -v /home/ruha321/github-and-linux-practice/Docker:/usr/share/nginx/html nginx
+</div></code></pre>
+<p>ボリューム</p>
+<pre class="hljs"><code><div>podman volume create htdocs
+podman volume <span class="hljs-built_in">ls</span>
+podman run -d --name volume-nginx -p 8080:80 -v htdocs:/usr/share/nginx/html nginx
+podman volume inspect htdocs <span class="hljs-comment"># ボリュームのマウント先が分かる</span>
+</div></code></pre>
+<p>一時ファイルシステムのマウント</p>
+<pre class="hljs"><code><div>podman container run -d --name tmpfs-nginx --mount <span class="hljs-built_in">type</span>=tmpfs,destination=/root/tmp,tmpfs-size=10,tmpfs-mode=755 nginx
+</div></code></pre>
+<p>データボリュームコンテナ</p>
+<pre class="hljs"><code><div>podman container run -it -d --name data-volume -v /tmp/data-volume/share:/tmp/data busybox
+podman container run -it -d --name share01 --volumes-from data-volume ubuntu
+podman container run -it -d --name share02 --volumes-from data-volume ubuntu
+</div></code></pre>
+<h2 id="コンテナのネットワーク">コンテナのネットワーク</h2>
+<ol>
+<li>none</li>
+<li>host</li>
+<li>bridge</li>
+</ol>
+<pre class="hljs"><code><div>podman network <span class="hljs-built_in">ls</span>
+podman network inspect podman
+</div></code></pre>
+<p>ブリッジネットワークとアプリケーション</p>
+<pre class="hljs"><code><div>podman network create wordpress-network
+podman network <span class="hljs-built_in">ls</span>
+podman container run -d --name mysql --network wordpress-network \
+-e MYSQL_ROOT_PASSWORD=wordpress \
+-e MYSQL_DATABASE=wordpress \
+-e MYSQL_USER=wordpress \
+-e MYSQL_PASSWORD=wordpress \
+mysql:8.0.25
+podman container run -d --name wordpress --network wordpress-network \
+-p 8080:80 \
+-e WORDPRESS_DB_HOST=mysql:3306 \
+-e WORDPRESS_DB_NAME=wordpress \
+-e WORDPRESS_DB_USER=wordpress \
+-e WORDPRESS_DB_PASSWORD=wordpress \
+docker.io/library/wordpress:php7.4-apache
+</div></code></pre>
+
+</body>
+</html>
